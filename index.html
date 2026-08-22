@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seruo Eghwotoma — Full-Stack Developer, Building Lingua Naija</title>
+<meta name="description" content="Seruo (Gosh) Eghwotoma — Full-stack developer based in Delta State, Nigeria, building Lingua Naija, a gamified app teaching Igbo, Yoruba, and Hausa.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+  :root{
+    --indigo: #1B2A4A;
+    --indigo-deep: #10192E;
+    --clay: #B5541F;
+    --clay-soft: #D97A3F;
+    --paper: #EFE6D3;
+    --paper-warm: #E6D9BC;
+    --gold: #D4A24C;
+    --ink: #1A1712;
+    --ink-soft: #4A4436;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Lora', serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1,h2,h3, .eyebrow, .nav-brand, .btn, .stack-tag{
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  a{ color: inherit; }
+
+  ::selection{ background: var(--gold); color: var(--indigo-deep); }
+
+  /* ===== NAV ===== */
+  nav{
+    position: fixed;
+    top:0; left:0; right:0;
+    z-index: 100;
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    padding: 20px 6%;
+    background: rgba(239,230,211,0.88);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(26,23,18,0.08);
+  }
+  .nav-brand{
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .nav-links{
+    display:flex;
+    gap: 28px;
+    list-style:none;
+  }
+  .nav-links a{
+    text-decoration:none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover{ color: var(--clay); }
+
+  /* ===== HERO ===== */
+  .hero{
+    min-height: 100svh;
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    padding: 120px 6% 80px;
+    position: relative;
+  }
+
+  .hero::before{
+    content:"";
+    position:absolute;
+    top:0; right:0;
+    width: 46%;
+    height: 100%;
+    background:
+      linear-gradient(135deg, transparent 0%, transparent 40%, var(--indigo) 40.5%),
+      repeating-linear-gradient(45deg, transparent 0 22px, rgba(181,84,31,0.08) 22px 23px);
+    opacity: 0.9;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .greetings{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--clay);
+    letter-spacing: 0.02em;
+    margin-bottom: 18px;
+    height: 1.4em;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .greetings .word{
+    position: absolute;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+  }
+  .greetings .word.active{
+    opacity: 1;
+    transform: translateY(0);
+    position: relative;
+  }
+
+  .hero h1{
+    font-size: clamp(2.6rem, 6.5vw, 5rem);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: var(--indigo-deep);
+    max-width: 14ch;
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 em{
+    font-style: normal;
+    color: var(--clay);
+  }
+
+  .hero-sub{
+    margin-top: 26px;
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+    max-width: 46ch;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-actions{
+    margin-top: 40px;
+    display:flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap: 8px;
+    padding: 13px 26px;
+    border-radius: 3px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1.5px solid var(--indigo-deep);
+    transition: all 0.2s ease;
+  }
+  .btn-solid{
+    background: var(--indigo-deep);
+    color: var(--paper);
+  }
+  .btn-solid:hover{
+    background: var(--clay);
+    border-color: var(--clay);
+  }
+  .btn-outline{
+    background: transparent;
+    color: var(--indigo-deep);
+  }
+  .btn-outline:hover{
+    background: var(--indigo-deep);
+    color: var(--paper);
+  }
+
+  .scroll-cue{
+    position:absolute;
+    bottom: 36px;
+    left: 6%;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    display:flex;
+    align-items:center;
+    gap: 10px;
+  }
+  .scroll-cue::after{
+    content:"";
+    width: 30px; height:1px;
+    background: var(--clay);
+  }
+
+  /* ===== SECTION SHARED ===== */
+  section{
+    padding: 110px 6%;
+    position: relative;
+  }
+  .eyebrow{
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 14px;
+  }
+  h2{
+    font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--indigo-deep);
+    max-width: 18ch;
+  }
+
+  /* ===== ABOUT ===== */
+  .about{
+    background: var(--paper-warm);
+    border-top: 1px solid rgba(26,23,18,0.08);
+    border-bottom: 1px solid rgba(26,23,18,0.08);
+  }
+  .about-grid{
+    display:grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 60px;
+    margin-top: 46px;
+    align-items: start;
+  }
+  .about-grid p{
+    font-size: 1.08rem;
+    color: var(--ink-soft);
+    max-width: 58ch;
+  }
+  .about-grid p + p{ margin-top: 18px; }
+
+  .facts{
+    display:flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .fact{
+    border-left: 2px solid var(--clay);
+    padding-left: 16px;
+  }
+  .fact-label{
+    font-family:'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .fact-value{
+    font-family:'Space Grotesk', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--indigo-deep);
+    margin-top: 4px;
+  }
+
+  /* ===== PROJECT ===== */
+  .project-head{
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .project-card{
+    margin-top: 56px;
+    background: var(--indigo-deep);
+    color: var(--paper);
+    border-radius: 4px;
+    overflow: hidden;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .project-visual{
+    background:
+      repeating-linear-gradient(115deg, rgba(212,162,76,0.12) 0 2px, transparent 2px 34px),
+      linear-gradient(160deg, var(--indigo) 0%, var(--indigo-deep) 100%);
+    padding: 46px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 18px;
+    min-height: 380px;
+  }
+  .mock-screen{
+    background: rgba(239,230,211,0.06);
+    border: 1px solid rgba(239,230,211,0.18);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .mock-screen .bar{
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(212,162,76,0.55);
+    margin-bottom: 10px;
+  }
+  .mock-screen .bar.short{ width: 40%; }
+  .mock-screen .bar.mid{ width: 68%; opacity: 0.6;}
+  .mock-row{ display:flex; gap: 10px; margin-top: 14px;}
+  .chip{
+    font-size: 0.68rem;
+    font-family:'Space Grotesk', sans-serif;
+    padding: 5px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(239,230,211,0.35);
+    color: rgba(239,230,211,0.8);
+  }
+
+  .project-body{
+    padding: 46px 44px;
+    display:flex;
+    flex-direction: column;
+  }
+  .project-body h3{
+    font-size: 1.5rem;
+    margin-bottom: 14px;
+  }
+  .project-body p{
+    color: rgba(239,230,211,0.78);
+    font-size: 1rem;
+    margin-bottom: 22px;
+  }
+  .stack{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 26px;
+  }
+  .stack-tag{
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 6px 11px;
+    border: 1px solid rgba(212,162,76,0.5);
+    color: var(--gold);
+    border-radius: 3px;
+  }
+  .project-links{
+    margin-top: auto;
+    display:flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .project-links a{
+    text-decoration: none;
+    font-family:'Space Grotesk', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--paper);
+    border-bottom: 1.5px solid var(--clay-soft);
+    padding-bottom: 3px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .project-links a:hover{
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .features{
+    margin-top: 60px;
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(26,23,18,0.1);
+    border: 1px solid rgba(26,23,18,0.1);
+  }
+  .feature{
+    background: var(--paper);
+    padding: 26px 22px;
+  }
+  .feature .num{
+    font-family:'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    color: var(--clay);
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+  .feature h4{
+    font-family:'Space Grotesk', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--indigo-deep);
+    margin-bottom: 6px;
+  }
+  .feature p{
+    font-size: 0.86rem;
+    color: var(--ink-soft);
+  }
+
+  /* ===== BACKGROUND / TIMELINE ===== */
+  .background{
+    background: var(--paper-warm);
+    border-top: 1px solid rgba(26,23,18,0.08);
+    border-bottom: 1px solid rgba(26,23,18,0.08);
+  }
+  .timeline{
+    margin-top: 50px;
+    display:flex;
+    flex-direction: column;
+  }
+  .tl-item{
+    display:grid;
+    grid-template-columns: 140px 1fr;
+    gap: 30px;
+    padding: 26px 0;
+    border-top: 1px solid rgba(26,23,18,0.12);
+  }
+  .tl-item:last-child{ border-bottom: 1px solid rgba(26,23,18,0.12); }
+  .tl-date{
+    font-family:'Space Grotesk', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--clay);
+  }
+  .tl-role{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight: 600;
+    color: var(--indigo-deep);
+    font-size: 1.02rem;
+    margin-bottom: 6px;
+  }
+  .tl-desc{
+    color: var(--ink-soft);
+    font-size: 0.96rem;
+    max-width: 62ch;
+  }
+
+  /* ===== CONTACT ===== */
+  .contact{
+    text-align:center;
+    padding: 130px 6%;
+  }
+  .contact .eyebrow{ justify-content:center; }
+  .contact h2{
+    margin: 0 auto;
+    max-width: 16ch;
+  }
+  .contact-links{
+    margin-top: 44px;
+    display:flex;
+    justify-content:center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  footer{
+    padding: 30px 6% 40px;
+    text-align:center;
+    font-family:'Space Grotesk', sans-serif;
+    font-size: 0.76rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 820px){
+    .about-grid{ grid-template-columns: 1fr; gap: 34px; }
+    .project-card{ grid-template-columns: 1fr; }
+    .project-visual{ min-height: 260px; }
+    .features{ grid-template-columns: repeat(2, 1fr); }
+    .tl-item{ grid-template-columns: 1fr; gap: 6px; }
+    .nav-links{ display:none; }
+    .hero::before{ width: 60%; opacity: 0.5; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    .greetings .word{ transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#top" class="nav-brand">S. Eghwotoma</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#project">Lingua Naija</a></li>
+    <li><a href="#background">Background</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="hero" id="top">
+  <div class="greetings" id="greetings">
+    <span class="word active">Ndewo</span>
+    <span class="word">Ẹ n lẹ</span>
+    <span class="word">Sannu</span>
+    <span class="word">Hello</span>
+  </div>
+  <h1>Full-stack developer, <em>building Lingua Naija.</em></h1>
+  <p class="hero-sub">Seruo (Gosh) Eghwotoma — a developer in Delta State, Nigeria, teaching Igbo, Yoruba and Hausa through a gamified learning app, one lesson at a time.</p>
+  <div class="hero-actions">
+    <a class="btn btn-solid" href="#project">See the project</a>
+    <a class="btn btn-outline" href="#contact">Get in touch</a>
+  </div>
+  <div class="scroll-cue">Scroll</div>
+</header>
+
+<section class="about" id="about">
+  <div class="eyebrow">About</div>
+  <h2>From circuits to code.</h2>
+  <div class="about-grid">
+    <div class="facts">
+      <div class="fact">
+        <div class="fact-label">Based in</div>
+        <div class="fact-value">Delta State, Nigeria</div>
+      </div>
+      <div class="fact">
+        <div class="fact-label">Studied</div>
+        <div class="fact-value">Electrical & Electronics Engineering</div>
+      </div>
+      <div class="fact">
+        <div class="fact-label">Currently</div>
+        <div class="fact-value">Founder &amp; Developer, Lingua Naija</div>
+      </div>
+    </div>
+    <div>
+      <p>I'm a full-stack developer building Lingua Naija — a gamified app that teaches Nigeria's three major languages: Igbo, Yoruba, and Hausa. It works the way Duolingo does: XP, streaks, hearts, leaderboards, and badges, with real user accounts and progress that's actually saved.</p>
+      <p>My background is in electrical and electronics engineering — circuits, systems, and telecommunications gave me the technical foundation that eventually pulled me toward software development.</p>
+      <p>I'm passionate about using technology to preserve and promote African languages and culture, and I'm always glad to connect with other developers, educators, and anyone working on African language tech.</p>
+    </div>
+  </div>
+</section>
+
+<section id="project">
+  <div class="project-head">
+    <div>
+      <div class="eyebrow">Selected Work</div>
+      <h2>Lingua Naija</h2>
+    </div>
+  </div>
+
+  <div class="project-card">
+    <div class="project-visual">
+      <div class="mock-screen">
+        <div class="bar short"></div>
+        <div class="bar mid"></div>
+        <div class="mock-row">
+          <span class="chip">🔥 12 day streak</span>
+          <span class="chip">♥ ♥ ♥ ♥ ♥</span>
+        </div>
+      </div>
+      <div class="mock-screen">
+        <div class="bar short"></div>
+        <div class="bar mid"></div>
+        <div class="mock-row">
+          <span class="chip">XP 1,240</span>
+          <span class="chip">🏆 Leaderboard</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-body">
+      <h3>A gamified way into Igbo, Yoruba &amp; Hausa</h3>
+      <p>Real accounts, saved progress, and a live leaderboard — built to make learning a Nigerian language feel like a daily habit, not homework.</p>
+      <div class="stack">
+        <span class="stack-tag">Node.js</span>
+        <span class="stack-tag">Express</span>
+        <span class="stack-tag">PostgreSQL</span>
+        <span class="stack-tag">Render</span>
+      </div>
+      <div class="project-links">
+        <a href="https://lingua-naija.onrender.com" target="_blank" rel="noopener">Live App →</a>
+        <a href="https://github.com/eghwotomaseruo-gosh/itan-naija-langs" target="_blank" rel="noopener">Source on GitHub →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="feature">
+      <div class="num">01</div>
+      <h4>Real Accounts</h4>
+      <p>Sign up, log in, and progress saved to Postgres — not a demo.</p>
+    </div>
+    <div class="feature">
+      <div class="num">02</div>
+      <h4>XP &amp; Streaks</h4>
+      <p>Daily habit-building mechanics that keep learners coming back.</p>
+    </div>
+    <div class="feature">
+      <div class="num">03</div>
+      <h4>Hearts &amp; Badges</h4>
+      <p>Lives system and achievement badges for milestones hit.</p>
+    </div>
+    <div class="feature">
+      <div class="num">04</div>
+      <h4>Live Leaderboard</h4>
+      <p>See where you rank against other learners in real time.</p>
+    </div>
+  </div>
+</section>
+
+<section class="background" id="background">
+  <div class="eyebrow">Background</div>
+  <h2>How I got here.</h2>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-date">Aug 2026 — Present</div>
+      <div>
+        <div class="tl-role">Founder &amp; Developer, Lingua Naija</div>
+        <div class="tl-desc">Designing and building the full stack — Node.js/Express backend, PostgreSQL database, deployed on Render. Real user accounts, XP/streak tracking, hearts/lives, and a live leaderboard.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2024 — 2026</div>
+      <div>
+        <div class="tl-role">Higher National Diploma, Electrical &amp; Electronics Engineering</div>
+        <div class="tl-desc">Petroleum Training Institute Nigeria — building on the foundation from the National Diploma with deeper systems and telecommunications work.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2019 — 2023</div>
+      <div>
+        <div class="tl-role">National Diploma, Electrical &amp; Electronics Engineering</div>
+        <div class="tl-desc">Petroleum Training Institute Nigeria — circuits, systems, and telecommunications fundamentals that later pulled me toward software development.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="eyebrow">Get in touch</div>
+  <h2>Let's build something.</h2>
+  <div class="contact-links">
+    <a class="btn btn-solid" href="https://www.linkedin.com/in/seruo-eghwotoma-14427a335" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn btn-outline" href="https://github.com/eghwotomaseruo-gosh" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</section>
+
+<footer>Seruo (Gosh) Eghwotoma — Delta State, Nigeria</footer>
+
+<script>
+  const words = document.querySelectorAll('#greetings .word');
+  let idx = 0;
+  setInterval(() => {
+    words[idx].classList.remove('active');
+    idx = (idx + 1) % words.length;
+    words[idx].classList.add('active');
+  }, 2200);
+</script>
+
+</body>
+</html>
