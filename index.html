@@ -61,6 +61,17 @@
     letter-spacing: -0.01em;
     text-decoration: none;
     color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .nav-avatar{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid var(--clay);
+    box-shadow: 0 2px 6px rgba(27,42,74,0.15);
   }
   .nav-links{
     display:flex;
@@ -100,6 +111,34 @@
     opacity: 0.9;
     pointer-events: none;
     z-index: 0;
+  }
+
+  .hero-top-row{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-avatar-frame{
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--clay);
+    box-shadow: 0 4px 12px rgba(27,42,74,0.18);
+    flex-shrink: 0;
+    background: var(--paper-warm);
+  }
+  .hero-avatar-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .hero-top-row .greetings{
+    margin-bottom: 0;
   }
 
   .greetings{
@@ -243,6 +282,133 @@
     gap: 60px;
     margin-top: 46px;
     align-items: start;
+  }
+  .about-aside{
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .profile-card{
+    background: var(--paper);
+    border: 1px solid rgba(26,23,18,0.12);
+    border-radius: 4px;
+    padding: 16px;
+    box-shadow: 4px 4px 0px rgba(181,84,31,0.14);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .profile-card:hover{
+    box-shadow: 4px 4px 0px rgba(27,42,74,0.22);
+  }
+  .profile-frame{
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 3px;
+    background: var(--indigo-deep);
+  }
+  .profile-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .profile-card:hover .profile-img{
+    transform: scale(1.02);
+  }
+  .profile-frame-corner{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 24px;
+    height: 24px;
+    border-bottom: 3px solid var(--clay);
+    border-right: 3px solid var(--clay);
+    pointer-events: none;
+  }
+  .profile-card-details{
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .profile-card-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .profile-card-name{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--indigo-deep);
+    letter-spacing: -0.01em;
+  }
+  .profile-badge{
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: #1e7041;
+    background: rgba(46,139,87,0.12);
+    padding: 2px 7px;
+    border-radius: 12px;
+    letter-spacing: 0.02em;
+  }
+  .badge-dot{
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #2E8B57;
+  }
+  .profile-card-sub{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+  }
+  .photo-controls{
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(26,23,18,0.14);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .photo-btn-change{
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--clay);
+    cursor: pointer;
+    transition: color 0.15s ease;
+  }
+  .photo-btn-change:hover{
+    color: var(--indigo-deep);
+  }
+  .photo-btn-reset{
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+    text-decoration: underline;
+    transition: color 0.15s ease;
+  }
+  .photo-btn-reset:hover{
+    color: var(--clay);
   }
   .about-grid p{
     font-size: 1.08rem;
@@ -494,7 +660,10 @@
 <body>
 
 <nav>
-  <a href="#top" class="nav-brand">S. Eghwotoma</a>
+  <a href="#top" class="nav-brand">
+    <img src="/src/assets/images/seruo_portrait_1790341346016.jpg" alt="Seruo Eghwotoma" referrerPolicy="no-referrer" class="nav-avatar avatar-sync">
+    <span>S. Eghwotoma</span>
+  </a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#project">Lingua Naija</a></li>
@@ -504,11 +673,16 @@
 </nav>
 
 <header class="hero" id="top">
-  <div class="greetings" id="greetings">
-    <span class="word active">Ndewo</span>
-    <span class="word">Ẹ n lẹ</span>
-    <span class="word">Sannu</span>
-    <span class="word">Hello</span>
+  <div class="hero-top-row">
+    <div class="hero-avatar-frame">
+      <img src="/src/assets/images/seruo_portrait_1790341346016.jpg" alt="Seruo Eghwotoma" referrerPolicy="no-referrer" class="hero-avatar-img avatar-sync">
+    </div>
+    <div class="greetings" id="greetings">
+      <span class="word active">Ndewo</span>
+      <span class="word">Ẹ n lẹ</span>
+      <span class="word">Sannu</span>
+      <span class="word">Hello</span>
+    </div>
   </div>
   <h1>Full-stack developer, <em>building Lingua Naija.</em></h1>
   <p class="hero-sub">Seruo (Gosh) Eghwotoma — a developer in Delta State, Nigeria, teaching Igbo, Yoruba and Hausa through a gamified learning app, one lesson at a time.</p>
@@ -523,18 +697,42 @@
   <div class="eyebrow">About</div>
   <h2>From circuits to code.</h2>
   <div class="about-grid">
-    <div class="facts">
-      <div class="fact">
-        <div class="fact-label">Based in</div>
-        <div class="fact-value">Delta State, Nigeria</div>
+    <div class="about-aside">
+      <div class="profile-card">
+        <div class="profile-frame">
+          <img id="main-profile-img" src="/src/assets/images/seruo_portrait_1790341346016.jpg" alt="Seruo Eghwotoma" referrerPolicy="no-referrer" class="profile-img avatar-sync">
+          <div class="profile-frame-corner"></div>
+        </div>
+        <div class="profile-card-details">
+          <div class="profile-card-header">
+            <span class="profile-card-name">Seruo (Gosh) Eghwotoma</span>
+            <span class="profile-badge"><span class="badge-dot"></span> Active</span>
+          </div>
+          <div class="profile-card-sub">Full-Stack Developer &amp; Founder</div>
+          <div class="photo-controls">
+            <label for="photo-file-input" class="photo-btn-change" title="Upload your photo">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              <span>Change photo</span>
+            </label>
+            <input type="file" id="photo-file-input" accept="image/*" style="display:none;">
+            <button type="button" id="photo-reset-btn" class="photo-btn-reset" style="display:none;" title="Revert to original">Reset</button>
+          </div>
+        </div>
       </div>
-      <div class="fact">
-        <div class="fact-label">Studied</div>
-        <div class="fact-value">Electrical & Electronics Engineering</div>
-      </div>
-      <div class="fact">
-        <div class="fact-label">Currently</div>
-        <div class="fact-value">Founder &amp; Developer, Lingua Naija</div>
+
+      <div class="facts">
+        <div class="fact">
+          <div class="fact-label">Based in</div>
+          <div class="fact-value">Delta State, Nigeria</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Studied</div>
+          <div class="fact-value">Electrical &amp; Electronics Engineering</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Currently</div>
+          <div class="fact-value">Founder &amp; Developer, Lingua Naija</div>
+        </div>
       </div>
     </div>
     <div>
@@ -652,6 +850,7 @@
 <footer>Seruo (Gosh) Eghwotoma — Delta State, Nigeria</footer>
 
 <script>
+  // Greeting rotation
   const words = document.querySelectorAll('#greetings .word');
   let idx = 0;
   setInterval(() => {
@@ -659,6 +858,58 @@
     idx = (idx + 1) % words.length;
     words[idx].classList.add('active');
   }, 2200);
+
+  // Avatar synchronization & custom photo upload
+  const photoInput = document.getElementById('photo-file-input');
+  const photoResetBtn = document.getElementById('photo-reset-btn');
+  const avatarSyncImgs = document.querySelectorAll('.avatar-sync');
+  const DEFAULT_PHOTO_SRC = '/src/assets/images/seruo_portrait_1790341346016.jpg';
+
+  function applyPhoto(src, isCustom) {
+    avatarSyncImgs.forEach(img => {
+      img.src = src;
+    });
+    if (photoResetBtn) {
+      photoResetBtn.style.display = isCustom ? 'inline-block' : 'none';
+    }
+  }
+
+  try {
+    const savedPhoto = localStorage.getItem('seruo_custom_photo');
+    if (savedPhoto) {
+      applyPhoto(savedPhoto, true);
+    }
+  } catch (e) {
+    console.warn('localStorage not available for photo persistence', e);
+  }
+
+  if (photoInput) {
+    photoInput.addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const dataUrl = event.target.result;
+        try {
+          localStorage.setItem('seruo_custom_photo', dataUrl);
+        } catch (err) {
+          console.warn('Could not save photo to localStorage', err);
+        }
+        applyPhoto(dataUrl, true);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  if (photoResetBtn) {
+    photoResetBtn.addEventListener('click', () => {
+      try {
+        localStorage.removeItem('seruo_custom_photo');
+      } catch (err) {}
+      applyPhoto(DEFAULT_PHOTO_SRC, false);
+      if (photoInput) photoInput.value = '';
+    });
+  }
 </script>
 
 </body>
