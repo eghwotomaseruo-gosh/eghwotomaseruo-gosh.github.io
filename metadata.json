@@ -1,0 +1,8 @@
+{
+  "name": "Seruo Eghwotoma Portfolio",
+  "description": "Seruo (Gosh) Eghwotoma — Full-stack developer based in Delta State, Nigeria, building Lingua Naija, a gamified app teaching Igbo, Yoruba, and Hausa.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
