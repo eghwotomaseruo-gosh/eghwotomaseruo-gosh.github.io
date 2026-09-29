@@ -20,6 +20,50 @@
     --gold: #D4A24C;
     --ink: #1A1712;
     --ink-soft: #4A4436;
+    --nav-bg: rgba(239,230,211,0.88);
+    --border-subtle: rgba(26,23,18,0.08);
+    --border-medium: rgba(26,23,18,0.12);
+    --feature-grid-bg: rgba(26,23,18,0.1);
+    --card-bg: var(--paper);
+    --card-shadow: 4px 4px 0px rgba(181,84,31,0.14);
+    --card-shadow-hover: 4px 4px 0px rgba(27,42,74,0.22);
+    --hero-pattern-clay: rgba(181,84,31,0.08);
+    --avatar-shadow: 0 4px 12px rgba(27,42,74,0.18);
+    --nav-avatar-shadow: 0 2px 6px rgba(27,42,74,0.15);
+    --project-bg: #10192E;
+    --project-text: #EFE6D3;
+    --mock-screen-bg: rgba(239,230,211,0.06);
+    --mock-screen-border: rgba(239,230,211,0.18);
+    --badge-bg: rgba(46,139,87,0.12);
+    --badge-color: #1e7041;
+  }
+
+  [data-theme="dark"], html.dark, body.dark{
+    --indigo: #3D5A80;
+    --indigo-deep: #F0ECE4;
+    --clay: #E27338;
+    --clay-soft: #F28E58;
+    --paper: #0E131F;
+    --paper-warm: #151D2E;
+    --gold: #E5B45E;
+    --ink: #EDE7DF;
+    --ink-soft: #A3ABB8;
+    --nav-bg: rgba(14,19,31,0.88);
+    --border-subtle: rgba(237,231,223,0.1);
+    --border-medium: rgba(237,231,223,0.16);
+    --feature-grid-bg: rgba(237,231,223,0.12);
+    --card-bg: #151D2E;
+    --card-shadow: 4px 4px 0px rgba(226,115,56,0.22);
+    --card-shadow-hover: 4px 4px 0px rgba(226,115,56,0.38);
+    --hero-pattern-clay: rgba(226,115,56,0.15);
+    --avatar-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    --nav-avatar-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    --project-bg: #090D16;
+    --project-text: #EDE7DF;
+    --mock-screen-bg: rgba(255,255,255,0.05);
+    --mock-screen-border: rgba(255,255,255,0.15);
+    --badge-bg: rgba(46,204,113,0.15);
+    --badge-color: #55d98d;
   }
 
   *{ box-sizing: border-box; margin:0; padding:0; }
@@ -32,9 +76,10 @@
     font-family: 'Lora', serif;
     line-height: 1.6;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
-  h1,h2,h3, .eyebrow, .nav-brand, .btn, .stack-tag{
+  h1,h2,h3, .eyebrow, .nav-brand, .btn, .stack-tag, .theme-toggle{
     font-family: 'Space Grotesk', sans-serif;
   }
 
@@ -51,9 +96,10 @@
     justify-content: space-between;
     align-items:center;
     padding: 20px 6%;
-    background: rgba(239,230,211,0.88);
+    background: var(--nav-bg);
     backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(26,23,18,0.08);
+    border-bottom: 1px solid var(--border-subtle);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
   .nav-brand{
     font-weight: 700;
@@ -64,6 +110,7 @@
     display: inline-flex;
     align-items: center;
     gap: 10px;
+    transition: color 0.3s ease;
   }
   .nav-avatar{
     width: 30px;
@@ -71,7 +118,12 @@
     border-radius: 50%;
     object-fit: cover;
     border: 1.5px solid var(--clay);
-    box-shadow: 0 2px 6px rgba(27,42,74,0.15);
+    box-shadow: var(--nav-avatar-shadow);
+  }
+  .nav-right{
+    display: flex;
+    align-items: center;
+    gap: 24px;
   }
   .nav-links{
     display:flex;
@@ -88,6 +140,47 @@
     transition: color 0.2s;
   }
   .nav-links a:hover{ color: var(--clay); }
+
+  .theme-toggle{
+    background: transparent;
+    border: 1px solid var(--border-medium);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--ink);
+    padding: 0;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  }
+  .theme-toggle:hover{
+    background: var(--paper-warm);
+    border-color: var(--clay);
+    color: var(--clay);
+    transform: scale(1.05);
+  }
+  .theme-toggle:focus-visible{
+    outline: 2px solid var(--clay);
+    outline-offset: 2px;
+  }
+  .theme-toggle .sun-icon{
+    display: none;
+    color: var(--gold);
+  }
+  .theme-toggle .moon-icon{
+    display: block;
+    color: var(--ink);
+  }
+  [data-theme="dark"] .theme-toggle .sun-icon,
+  html.dark .theme-toggle .sun-icon{
+    display: block;
+  }
+  [data-theme="dark"] .theme-toggle .moon-icon,
+  html.dark .theme-toggle .moon-icon{
+    display: none;
+  }
 
   /* ===== HERO ===== */
   .hero{
@@ -107,10 +200,11 @@
     height: 100%;
     background:
       linear-gradient(135deg, transparent 0%, transparent 40%, var(--indigo) 40.5%),
-      repeating-linear-gradient(45deg, transparent 0 22px, rgba(181,84,31,0.08) 22px 23px);
+      repeating-linear-gradient(45deg, transparent 0 22px, var(--hero-pattern-clay) 22px 23px);
     opacity: 0.9;
     pointer-events: none;
     z-index: 0;
+    transition: background 0.3s ease;
   }
 
   .hero-top-row{
@@ -127,9 +221,10 @@
     border-radius: 50%;
     overflow: hidden;
     border: 2px solid var(--clay);
-    box-shadow: 0 4px 12px rgba(27,42,74,0.18);
+    box-shadow: var(--avatar-shadow);
     flex-shrink: 0;
     background: var(--paper-warm);
+    transition: box-shadow 0.3s ease;
   }
   .hero-avatar-img{
     width: 100%;
@@ -253,6 +348,7 @@
   section{
     padding: 110px 6%;
     position: relative;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   .eyebrow{
     font-size: 0.75rem;
@@ -261,6 +357,7 @@
     text-transform: uppercase;
     color: var(--clay);
     margin-bottom: 14px;
+    transition: color 0.3s ease;
   }
   h2{
     font-size: clamp(1.8rem, 3.4vw, 2.6rem);
@@ -268,13 +365,15 @@
     letter-spacing: -0.01em;
     color: var(--indigo-deep);
     max-width: 18ch;
+    transition: color 0.3s ease;
   }
 
   /* ===== ABOUT ===== */
   .about{
     background: var(--paper-warm);
-    border-top: 1px solid rgba(26,23,18,0.08);
-    border-bottom: 1px solid rgba(26,23,18,0.08);
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
   .about-grid{
     display:grid;
@@ -289,15 +388,15 @@
     gap: 32px;
   }
   .profile-card{
-    background: var(--paper);
-    border: 1px solid rgba(26,23,18,0.12);
+    background: var(--card-bg);
+    border: 1px solid var(--border-medium);
     border-radius: 4px;
     padding: 16px;
-    box-shadow: 4px 4px 0px rgba(181,84,31,0.14);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
   }
   .profile-card:hover{
-    box-shadow: 4px 4px 0px rgba(27,42,74,0.22);
+    box-shadow: var(--card-shadow-hover);
   }
   .profile-frame{
     position: relative;
@@ -306,6 +405,55 @@
     overflow: hidden;
     border-radius: 3px;
     background: var(--indigo-deep);
+    cursor: pointer;
+  }
+  .profile-frame-hover-hint{
+    position: absolute;
+    inset: 0;
+    background: rgba(14, 19, 31, 0.72);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    backdrop-filter: blur(2px);
+    pointer-events: none;
+  }
+  .profile-frame:hover .profile-frame-hover-hint{
+    opacity: 1;
+  }
+  .profile-toast{
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--paper-warm);
+    color: var(--ink);
+    border: 1px solid var(--border-medium);
+    border-left: 4px solid var(--clay);
+    padding: 12px 18px;
+    border-radius: 4px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.86rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1000;
+    transform: translateY(120%);
+    opacity: 0;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  }
+  .profile-toast.show{
+    transform: translateY(0);
+    opacity: 1;
   }
   .profile-img{
     width: 100%;
@@ -345,6 +493,7 @@
     font-weight: 700;
     color: var(--indigo-deep);
     letter-spacing: -0.01em;
+    transition: color 0.3s ease;
   }
   .profile-badge{
     display: inline-flex;
@@ -353,11 +502,12 @@
     font-family: 'Space Grotesk', sans-serif;
     font-size: 0.68rem;
     font-weight: 600;
-    color: #1e7041;
-    background: rgba(46,139,87,0.12);
+    color: var(--badge-color);
+    background: var(--badge-bg);
     padding: 2px 7px;
     border-radius: 12px;
     letter-spacing: 0.02em;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   .badge-dot{
     width: 6px;
@@ -370,50 +520,42 @@
     font-size: 0.78rem;
     color: var(--ink-soft);
     letter-spacing: 0.02em;
+    transition: color 0.3s ease;
   }
-  .photo-controls{
+  .btn-update-photo{
     margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px dashed rgba(26,23,18,0.14);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-  }
-  .photo-btn-change{
+    width: 100%;
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    justify-content: center;
+    gap: 7px;
+    padding: 7px 10px;
+    background: transparent;
+    border: 1px dashed var(--clay);
+    border-radius: 4px;
+    color: var(--clay);
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--clay);
     cursor: pointer;
-    transition: color 0.15s ease;
+    transition: all 0.2s ease;
   }
-  .photo-btn-change:hover{
-    color: var(--indigo-deep);
+  .btn-update-photo:hover{
+    background: var(--clay);
+    color: #ffffff;
+    border-style: solid;
   }
-  .photo-btn-reset{
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.7rem;
-    color: var(--ink-soft);
-    text-decoration: underline;
-    transition: color 0.15s ease;
-  }
-  .photo-btn-reset:hover{
-    color: var(--clay);
+  .profile-card.drag-over{
+    border-color: var(--clay) !important;
+    outline: 2px dashed var(--clay);
+    outline-offset: 4px;
+    transform: scale(1.02);
   }
   .about-grid p{
     font-size: 1.08rem;
     color: var(--ink-soft);
     max-width: 58ch;
+    transition: color 0.3s ease;
   }
   .about-grid p + p{ margin-top: 18px; }
 
@@ -432,6 +574,7 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--ink-soft);
+    transition: color 0.3s ease;
   }
   .fact-value{
     font-family:'Space Grotesk', sans-serif;
@@ -439,6 +582,7 @@
     font-weight: 600;
     color: var(--indigo-deep);
     margin-top: 4px;
+    transition: color 0.3s ease;
   }
 
   /* ===== PROJECT ===== */
@@ -452,12 +596,13 @@
 
   .project-card{
     margin-top: 56px;
-    background: var(--indigo-deep);
-    color: var(--paper);
+    background: var(--project-bg);
+    color: var(--project-text);
     border-radius: 4px;
     overflow: hidden;
     display:grid;
     grid-template-columns: 1fr 1fr;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   .project-visual{
     background:
@@ -471,10 +616,11 @@
     min-height: 380px;
   }
   .mock-screen{
-    background: rgba(239,230,211,0.06);
-    border: 1px solid rgba(239,230,211,0.18);
+    background: var(--mock-screen-bg);
+    border: 1px solid var(--mock-screen-border);
     border-radius: 10px;
     padding: 18px 20px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
   .mock-screen .bar{
     height: 8px;
@@ -550,12 +696,14 @@
     display:grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1px;
-    background: rgba(26,23,18,0.1);
-    border: 1px solid rgba(26,23,18,0.1);
+    background: var(--feature-grid-bg);
+    border: 1px solid var(--feature-grid-bg);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
   .feature{
-    background: var(--paper);
+    background: var(--card-bg);
     padding: 26px 22px;
+    transition: background-color 0.3s ease;
   }
   .feature .num{
     font-family:'Space Grotesk', sans-serif;
@@ -570,17 +718,20 @@
     font-weight: 600;
     color: var(--indigo-deep);
     margin-bottom: 6px;
+    transition: color 0.3s ease;
   }
   .feature p{
     font-size: 0.86rem;
     color: var(--ink-soft);
+    transition: color 0.3s ease;
   }
 
   /* ===== BACKGROUND / TIMELINE ===== */
   .background{
     background: var(--paper-warm);
-    border-top: 1px solid rgba(26,23,18,0.08);
-    border-bottom: 1px solid rgba(26,23,18,0.08);
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
   .timeline{
     margin-top: 50px;
@@ -592,9 +743,10 @@
     grid-template-columns: 140px 1fr;
     gap: 30px;
     padding: 26px 0;
-    border-top: 1px solid rgba(26,23,18,0.12);
+    border-top: 1px solid var(--border-medium);
+    transition: border-color 0.3s ease;
   }
-  .tl-item:last-child{ border-bottom: 1px solid rgba(26,23,18,0.12); }
+  .tl-item:last-child{ border-bottom: 1px solid var(--border-medium); }
   .tl-date{
     font-family:'Space Grotesk', sans-serif;
     font-size: 0.82rem;
@@ -607,11 +759,13 @@
     color: var(--indigo-deep);
     font-size: 1.02rem;
     margin-bottom: 6px;
+    transition: color 0.3s ease;
   }
   .tl-desc{
     color: var(--ink-soft);
     font-size: 0.96rem;
     max-width: 62ch;
+    transition: color 0.3s ease;
   }
 
   /* ===== CONTACT ===== */
@@ -661,21 +815,39 @@
 
 <nav>
   <a href="#top" class="nav-brand">
-    <img src="/src/assets/images/seruo_portrait_1790341346016.jpg" alt="Seruo Eghwotoma" referrerPolicy="no-referrer" class="nav-avatar avatar-sync">
+    <img src="/seruo-profile.jpg?v=3" alt="Seruo Eghwotoma" referrerPolicy="no-referrer" class="nav-avatar avatar-sync">
     <span>S. Eghwotoma</span>
   </a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#project">Lingua Naija</a></li>
-    <li><a href="#background">Background</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#project">Lingua Naija</a></li>
+      <li><a href="#background">Background</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
+      <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
+  </div>
 </nav>
 
 <header class="hero" id="top">
   <div class="hero-top-row">
     <div class="hero-avatar-frame">
-      <img src="/src/assets/images/seruo_portrait_1790341346016.jpg" alt="Seruo Eghwotoma" referrerPolicy="no-referrer" class="hero-avatar-img avatar-sync">
+      <img src="/seruo-profile.jpg?v=3" alt="Seruo Eghwotoma" referrerPolicy="no-referrer" class="hero-avatar-img avatar-sync">
     </div>
     <div class="greetings" id="greetings">
       <span class="word active">Ndewo</span>
@@ -698,10 +870,15 @@
   <h2>From circuits to code.</h2>
   <div class="about-grid">
     <div class="about-aside">
-      <div class="profile-card">
-        <div class="profile-frame">
-          <img id="main-profile-img" src="/src/assets/images/seruo_portrait_1790341346016.jpg" alt="Seruo Eghwotoma" referrerPolicy="no-referrer" class="profile-img avatar-sync">
+      <div class="profile-card" id="profile-card">
+        <div class="profile-frame" id="profile-frame" title="Click or drop your exact photo">
+          <img id="main-profile-img" src="/seruo-profile.jpg?v=3" alt="Seruo Eghwotoma" referrerPolicy="no-referrer" class="profile-img avatar-sync">
           <div class="profile-frame-corner"></div>
+          <div class="profile-frame-hover-hint">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            <span>Set Exact Photo</span>
+          </div>
+          <input type="file" id="direct-photo-input" accept="image/*" style="display:none;">
         </div>
         <div class="profile-card-details">
           <div class="profile-card-header">
@@ -709,14 +886,10 @@
             <span class="profile-badge"><span class="badge-dot"></span> Active</span>
           </div>
           <div class="profile-card-sub">Full-Stack Developer &amp; Founder</div>
-          <div class="photo-controls">
-            <label for="photo-file-input" class="photo-btn-change" title="Upload your photo">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-              <span>Change photo</span>
-            </label>
-            <input type="file" id="photo-file-input" accept="image/*" style="display:none;">
-            <button type="button" id="photo-reset-btn" class="photo-btn-reset" style="display:none;" title="Revert to original">Reset</button>
-          </div>
+          <button type="button" class="btn-update-photo" id="btn-update-photo" title="Choose or drop your exact original photo">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span>Replace with Exact Photo</span>
+          </button>
         </div>
       </div>
 
@@ -849,6 +1022,11 @@
 
 <footer>Seruo (Gosh) Eghwotoma — Delta State, Nigeria</footer>
 
+<div id="profile-toast" class="profile-toast" role="status" aria-live="polite">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--clay);"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+  <span class="toast-msg">Exact photo updated and permanently saved!</span>
+</div>
+
 <script>
   // Greeting rotation
   const words = document.querySelectorAll('#greetings .word');
@@ -859,57 +1037,174 @@
     words[idx].classList.add('active');
   }, 2200);
 
-  // Avatar synchronization & custom photo upload
-  const photoInput = document.getElementById('photo-file-input');
-  const photoResetBtn = document.getElementById('photo-reset-btn');
-  const avatarSyncImgs = document.querySelectorAll('.avatar-sync');
-  const DEFAULT_PHOTO_SRC = '/src/assets/images/seruo_portrait_1790341346016.jpg';
+  // Theme Management (Light / Dark) with CSS Variables & LocalStorage
+  const themeToggle = document.getElementById('theme-toggle');
 
-  function applyPhoto(src, isCustom) {
-    avatarSyncImgs.forEach(img => {
-      img.src = src;
-    });
-    if (photoResetBtn) {
-      photoResetBtn.style.display = isCustom ? 'inline-block' : 'none';
-    }
+  function getPreferredTheme() {
+    try {
+      const saved = localStorage.getItem('seruo_theme');
+      if (saved === 'dark' || saved === 'light') return saved;
+    } catch (e) {}
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
 
-  try {
-    const savedPhoto = localStorage.getItem('seruo_custom_photo');
-    if (savedPhoto) {
-      applyPhoto(savedPhoto, true);
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.body.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.body.classList.remove('dark');
     }
-  } catch (e) {
-    console.warn('localStorage not available for photo persistence', e);
+    try {
+      localStorage.setItem('seruo_theme', theme);
+    } catch (e) {}
   }
 
-  if (photoInput) {
-    photoInput.addEventListener('change', (e) => {
-      const file = e.target.files && e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const dataUrl = event.target.result;
-        try {
-          localStorage.setItem('seruo_custom_photo', dataUrl);
-        } catch (err) {
-          console.warn('Could not save photo to localStorage', err);
-        }
-        applyPhoto(dataUrl, true);
-      };
-      reader.readAsDataURL(file);
+  // Initialize theme on page load
+  applyTheme(getPreferredTheme());
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const nextTheme = current === 'dark' ? 'light' : 'dark';
+      applyTheme(nextTheme);
     });
   }
 
-  if (photoResetBtn) {
-    photoResetBtn.addEventListener('click', () => {
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
       try {
-        localStorage.removeItem('seruo_custom_photo');
+        if (!localStorage.getItem('seruo_theme')) {
+          applyTheme(e.matches ? 'dark' : 'light');
+        }
       } catch (err) {}
-      applyPhoto(DEFAULT_PHOTO_SRC, false);
-      if (photoInput) photoInput.value = '';
     });
   }
+
+  // Exact profile photo upload, drag-and-drop, clipboard paste & sync
+  const profileCard = document.getElementById('profile-card');
+  const profileFrame = document.getElementById('profile-frame');
+  const btnUpdatePhoto = document.getElementById('btn-update-photo');
+  const directPhotoInput = document.getElementById('direct-photo-input');
+  const toast = document.getElementById('profile-toast');
+  const avatarImgs = document.querySelectorAll('.avatar-sync');
+
+  function showToast(msg) {
+    if (!toast) return;
+    toast.querySelector('.toast-msg').textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4500);
+  }
+
+  // Restore custom photo from localStorage if valid
+  try {
+    const cachedCustom = localStorage.getItem('seruo_custom_photo');
+    if (cachedCustom && cachedCustom.length > 500) {
+      avatarImgs.forEach(img => { img.src = cachedCustom; });
+    } else if (cachedCustom) {
+      localStorage.removeItem('seruo_custom_photo');
+    }
+  } catch (e) {}
+
+  function handlePhotoFile(file) {
+    if (!file || !file.type.startsWith('image/')) {
+      showToast('Please select a valid image file (PNG, JPG, or WebP).');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      const dataUrl = event.target.result;
+      avatarImgs.forEach(img => { img.src = dataUrl; });
+
+      try {
+        localStorage.setItem('seruo_custom_photo', dataUrl);
+      } catch (err) {}
+
+      try {
+        const res = await fetch('/api/upload-profile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ image: dataUrl })
+        });
+        if (res.ok) {
+          showToast('Exact picture saved and permanently updated across the site!');
+        } else {
+          showToast('Photo updated across all views on this device!');
+        }
+      } catch (uploadErr) {
+        console.error(uploadErr);
+        showToast('Photo updated across all views on this device!');
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  if (directPhotoInput) {
+    directPhotoInput.addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (file) handlePhotoFile(file);
+    });
+  }
+
+  if (profileFrame) {
+    profileFrame.addEventListener('click', () => {
+      if (directPhotoInput) directPhotoInput.click();
+    });
+  }
+
+  if (btnUpdatePhoto) {
+    btnUpdatePhoto.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (directPhotoInput) directPhotoInput.click();
+    });
+  }
+
+  // Drag and Drop onto profile card
+  if (profileCard) {
+    ['dragenter', 'dragover'].forEach(name => {
+      profileCard.addEventListener(name, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        profileCard.classList.add('drag-over');
+      });
+    });
+
+    ['dragleave', 'dragend'].forEach(name => {
+      profileCard.addEventListener(name, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        profileCard.classList.remove('drag-over');
+      });
+    });
+
+    profileCard.addEventListener('drop', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      profileCard.classList.remove('drag-over');
+      const files = e.dataTransfer && e.dataTransfer.files;
+      if (files && files.length > 0) {
+        handlePhotoFile(files[0]);
+      }
+    });
+  }
+
+  // Global Clipboard Paste (Ctrl+V / Cmd+V) to set profile photo
+  window.addEventListener('paste', (e) => {
+    const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].type.indexOf('image') !== -1) {
+        const blob = items[i].getAsFile();
+        if (blob) {
+          handlePhotoFile(blob);
+          showToast('Image pasted and set as your exact profile photo!');
+          break;
+        }
+      }
+    }
+  });
 </script>
 
 </body>
